@@ -34,8 +34,6 @@ void main() {
       if (length(color.rgb - colorsToReplace[i]) < 0.01) {
          color.rgb = colorsToReplaceWith[i];
       }
-      // if (length(color.rgb - vec3(0.71, 0.75, 1)) < 0.01) {
-      // color.rgb = vec3(0.96, 0.76, 0.91);
    }
    gl_FragColor = color;
 }`
