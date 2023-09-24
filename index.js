@@ -1,4 +1,4 @@
-import "/dist/jszip.js"; // https://github.com/Stuk/jszip/)
+import "./jszip.js"; // https://github.com/Stuk/jszip/)
 
 const maxColors = 64;
 
