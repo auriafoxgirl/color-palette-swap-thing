@@ -10,7 +10,7 @@ b4befe f5c2e7
 ```
 will replace color b4befe with f5c2e7 in all images
 
-you can use multiple lines to replace more colors (default limit is 64)
+you can use multiple lines to replace more colors (default limit is 256)
 
 ## libraries
 uses [jszip](https://github.com/Stuk/jszip/)

@@ -1,6 +1,6 @@
 import "./jszip.js"; // https://github.com/Stuk/jszip/)
 
-const maxColors = 64;
+const maxColors = 256;
 
 const input = document.getElementById("inputZip");
 const output = document.getElementById("output");
@@ -180,6 +180,7 @@ async function renderImages() {
    }
    gl.uniform1i(gl.getUniformLocation(shaderProgram, "colorsCount"), colorCount);
 
+
    // create zip
    const newZip = new JSZip();
    // read zip
@@ -190,6 +191,16 @@ async function renderImages() {
       files[zipEntry.name] = zipEntry;
    });
 
+   // border variant
+   const borderVariant = document.getElementById("borderless").checked ? 'borderless variants/' : 'border variants/';
+   for (const name of Object.keys(files)) {
+      const newName = name.replace(borderVariant, '');
+      if (newName != name) {
+         files[newName] = files[name];
+      }
+   }
+
+   // apply shader to all images and add files to zip
    for (const name of Object.keys(files)) {
       if (myId != renderImagesCallId) return;
       if (name.substring(name.length - 1) == "/") continue;
@@ -245,3 +256,4 @@ function downloadOutput() {
 input.addEventListener("change", renderImages);
 document.getElementById("reloadInput").onclick = renderImages;
 document.getElementById("downloadButton").onclick = downloadOutput;
+document.getElementById("colorList").value = 'b4befe f5c2e7';
