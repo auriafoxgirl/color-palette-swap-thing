@@ -199,12 +199,12 @@ async function renderImages() {
          files[newName] = files[name];
       }
    }
-
+   
    // apply shader to all images and add files to zip
    for (const name of Object.keys(files)) {
       if (myId != renderImagesCallId) return;
       if (name.substring(name.length - 1) == "/") continue;
-
+      
       let folderToSave = newZip;
       const path = name.split("/");
       for (let i = 0; i < path.length - 1; i++) {
@@ -218,25 +218,25 @@ async function renderImages() {
       currentOutput.appendChild(text);
 
       if (/\.png$/.test(name)) {
-         var binary = '';
-         var bytes = new Uint8Array(await zipEntry.async("uint8array"));
-         var len = bytes.byteLength;
+         const binary = [];
+         const bytes = new Uint8Array(await zipEntry.async("uint8array"));
+         const len = bytes.byteLength;
          for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
+            binary.push(String.fromCharCode(bytes[i]));
          }
-
+         
          const image = document.createElement("img");
-         image.src = 'data:image/png;base64,' + window.btoa(binary);
+         image.src = 'data:image/png;base64,' + window.btoa(binary.join(''));
          await image.decode();
          const newImage = await applyShader(image);
          currentOutput.appendChild(newImage);
-
+         
          folderToSave.file(fileName, newImage.src.replace(/^data:image\/?[A-z]*;base64,/, ''), { base64: true })
       } else {
          folderToSave.file(fileName, await zipEntry.async("string"))
       }
    }
-
+   
    // set new zip to download and enable download button
    zipToSave = newZip;
    document.getElementById("downloadButton").disabled = false;
